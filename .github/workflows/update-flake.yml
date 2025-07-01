@@ -1,0 +1,19 @@
+name: Update Flake Inputs
+on:
+  schedule:
+    - cron: '0 0 * * SUN'
+  workflow_dispatch:       # Manual triggers
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/update-flake-lock@v3
+        with:
+          pr-title: "chore(deps): update Nix flake inputs"
+          pr-labels: "dependencies,automated"
